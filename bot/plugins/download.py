@@ -33,7 +33,44 @@ def _download(client, message):
       LOGGER.info(f'Copy:{user_id}: {link}')
       msg = GoogleDrive(user_id).clone(link)
       sent_message.edit(msg)
-    else:
+    ifelse:
+       'magnet:\?xt=urn:btih:[a-zA-Z0-9]*'
+def make_reply(msg):
+    result=re.match(pattern,msg)
+    if result:
+        print(msg)
+        handle = lt.add_magnet_uri(ses, msg, params)
+        ses.start_dht()
+
+        begin = time.time()
+        print(datetime.datetime.now())
+
+        print ('Downloading Metadata...')
+        while (not handle.has_metadata()):
+            time.sleep(1)
+        print ('Got Metadata, Starting Torrent Download...')
+
+        print("Starting", handle.name())
+        startreply=('Download started for',handle.name())
+        bot.send_message(startreply,from_)
+        while (handle.status().state != lt.torrent_status.seeding):
+            s = handle.status()
+            state_str = ['queued', 'checking', 'downloading metadata', \
+                    'downloading', 'finished', 'seeding', 'allocating']
+            print ('%.2f%% complete (down: %.1f kb/s up: %.1f kB/s peers: %d) %s ' % \
+                    (s.progress * 100, s.download_rate / 1000, s.upload_rate / 1000, \
+                    s.num_peers, state_str[s.state]))
+            time.sleep(5)
+
+        end = time.time()
+        print(handle.name(), "COMPLETE")
+
+        print("Elapsed Time: ",int((end-begin)//60),"min :", int((end-begin)%60), "sec")
+
+        print(datetime.datetime.now())
+        reply='Download Finished You can find downloaded file @ https://drive.google.com/folderview?id=1Lt3_3mY_Jjdgt9llNGAz8yZHl-QccBJO'
+       
+      else:
       if '|' in link:
         link, filename = link.split('|')
         link = link.strip()
