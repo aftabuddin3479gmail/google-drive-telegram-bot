@@ -33,12 +33,7 @@ def _download(client, message):
       LOGGER.info(f'Copy:{user_id}: {link}')
       msg = GoogleDrive(user_id).clone(link)
       sent_message.edit(msg)
-    if:
-       'magnet:\?xt=urn:btih:[a-zA-Z0-9]*'
-def make_reply(msg):
-    result=re.match(pattern,msg)
-  
-      else:
+    else:
       if '|' in link:
         link, filename = link.split('|')
         link = link.strip()
