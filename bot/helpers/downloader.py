@@ -2,6 +2,7 @@ import os
 import wget
 import glob
 import youtube_dl
+import torrent-client
 from pySmartDL import SmartDL
 from urllib.error import HTTPError
 from youtube_dl import DownloadError
