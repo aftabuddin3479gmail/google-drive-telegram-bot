@@ -9,16 +9,6 @@ from bot import DOWNLOAD_DIRECTORY, LOGGER
 from bot.config import Messages, BotCommands
 from pyrogram.errors import FloodWait, RPCError
 
-def get_torrent(site):
-    results = site
-    url = "https://nyaa.si/download/958359.torrent"
-    opener = urllib.request.build_opener()
-    opener.addheaders = [('User-Agent', 'CERN-LineMode/2.15 libwww/2.17b3')]
-    urllib.request.install_opener(opener)  # NOTE: global for the process
-    for line in results:
-        name = "[HorribleSubs] " + line + " [720p].torrent"
-        urllib.request.urlretrieve(url, name)
-
 @Client.on_message(filters.private & filters.incoming & filters.text & (filters.command(BotCommands.Download) | filters.regex('^(ht|f)tp*')) & CustomFilters.auth_users)
 def _download(client, message):
   user_id = message.from_user.id
